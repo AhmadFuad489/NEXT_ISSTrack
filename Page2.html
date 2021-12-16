@@ -1,0 +1,166 @@
+
+      <!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=\, initial-scale=1.0"
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Audiowide&effect=neon">
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+   integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+   crossorigin=""/>
+
+   <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+   integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+   crossorigin=""></script>
+
+    <style>
+       h1{
+        text-align: center;
+        margin-top: 50px;
+      }
+
+      p{
+        text-align: center;
+        margin-top: 50px;
+        margin-left: 10px;
+        
+      }
+
+      #issMap {
+        height: 360px;
+        width: 800px;
+        align-self: center;
+        margin-top: 100px;
+      }
+
+      body {
+        font-family: "Audiowide", sans-serif;
+        font-size: 17px;
+  
+        
+        background-image: url('img/starry-night-sky.jpg');
+        background-repeat: no-repeat;
+        background-size: cover;
+      }
+
+      input{
+          text-align: center;
+          align-content: center;
+      }
+
+      .center{
+        margin: auto;
+    width: 60%;
+  border: 3px solid hsl(100, 13%, 95%);
+  padding: 10px;
+      }
+
+      @media screen and (max-width: 600px) {
+        #issMap {
+        height: 360px;
+        width: 320px;
+        align-self: center;
+      }
+
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 17px;
+  
+        
+        background-image: url('img/starry-night-sky.jpg');
+        background-repeat: no-repeat;
+        background-size: 100% 150%;
+      }
+
+      .center{
+        margin: auto;
+    width: 60%;
+  border: 3px solid #73AD21;
+  padding: 10px;
+      }
+    }
+    </style>
+
+     <title>ISS Tracker</title>
+  </head>
+  <body>
+
+    <p style="color: white;">
+        Latitude: <span id="lat"></span><br />
+        Longitude: <span id="lon"></span>
+      </p>
+
+      <input type="text" id="txtInput" placeholder="dd-mm-yyyy hh:mm" >
+   <button type="button" onclick="result();">Track</button>
+
+      <div class="center" id = "issMap"></div>
+
+      <button style="align-items: center;margin-top: 50px;"onclick="document.location='Page1.HTML'">Home</button>
+    <script>
+
+
+
+    var mymap = L.map('issMap').setView([0, 0], 1);
+    const attribution =
+        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
+
+        const tileUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+        const tiles = L.tileLayer(tileUrl, { attribution } );
+        tiles.addTo(mymap);       
+function result(){
+    var numberValue = document.getElementById("txtInput").value;
+    dateTimeParts = numberValue.split(' '),
+    timeParts = dateTimeParts[1].split(':'),
+    dateParts = dateTimeParts[0].split('-'),
+    date; 
+
+    var date = new Date(dateParts[2], parseInt(dateParts[1], 10) - 1, dateParts[0], timeParts[0], timeParts[1]);
+
+   
+
+        var tenminutes = 60 * 60 * 1000;
+
+        var myTime = new Date();
+
+        
+    
+    const api_url = 'https://api.wheretheiss.at/v1/satellites/25544/positions?timestamps=' + date.getTime() + '&units=miles';
+    async function getISS() {
+      const response = await fetch(api_url);
+      const data = await response.json();
+      const { latitude, longitude } = data;
+
+      console.log(data);
+
+    
+
+      
+
+
+
+
+     
+
+
+
+
+                     
+    
+      
+
+     
+      
+     
+
+}
+getISS();    
+    
+}
+
+      
+    </script>
+  </body>
+</html>                                   
